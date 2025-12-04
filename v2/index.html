@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaauHei考試系統</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
+</head>
+<body>
+    <div class="container">
+        <!-- 初始配置界面 -->
+        <div id="welcome-screen" class="screen active">
+            <div class="header">
+                <h1><i class="fas fa-graduation-cap"></i> HaauHei考試系統</h1>
+                <p class="subtitle">完全本地運行的智能考試平台</p>
+            </div>
+            
+            <div class="config-panel">
+                <div class="config-item">
+                    <label for="question-count">
+                        <i class="fas fa-list-ol"></i> 選擇題目數量：
+                    </label>
+                    <div class="number-selector">
+                        <button class="btn-number" onclick="adjustCount(-1)">-</button>
+                        <input type="number" id="question-count" value="10" min="1" max="50">
+                        <button class="btn-number" onclick="adjustCount(1)">+</button>
+                    </div>
+                </div>
+                
+                <div class="config-item">
+                    <label>
+                        <i class="fas fa-book"></i> 已載入科目：
+                    </label>
+                    <div id="subject-list" class="subject-list">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i> 正在載入題庫...
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="config-item">
+                    <label>
+                        <i class="fas fa-chart-line"></i> 學習統計：
+                    </label>
+                    <div id="learning-stats" class="stats-panel">
+                        <div class="stat-item">
+                            <span class="stat-label">總答題數：</span>
+                            <span class="stat-value" id="total-answered">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">正確率：</span>
+                            <span class="stat-value" id="accuracy-rate">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">已掌握題目：</span>
+                            <span class="stat-value" id="mastered-count">0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="start-exam-btn" class="btn-primary" onclick="startExam()">
+                        <i class="fas fa-play-circle"></i> 開始考試
+                    </button>
+                    <button id="reset-history-btn" class="btn-secondary" onclick="resetHistory()">
+                        <i class="fas fa-history"></i> 重置學習記錄
+                    </button>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h3><i class="fas fa-info-circle"></i> 系統說明</h3>
+                <ul>
+                    <li>系統完全本地運行，無需網絡連接</li>
+                    <li>智能出題算法會根據您的學習歷史調整題目出現頻率</li>
+                    <li>近期答對的題目會減少出現，實現高效複習</li>
+                    <li>所有數據都保存在您的瀏覽器中</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 考試進行界面 -->
+        <div id="exam-screen" class="screen">
+            <div class="exam-header">
+                <div class="exam-info">
+                    <h2 id="current-subject">科目名稱</h2>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span id="current-question">1</span> / <span id="total-questions">10</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="progress-fill" class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timer-container">
+                    <i class="fas fa-clock"></i>
+                    <span id="exam-timer">--:--</span>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question-content">
+                    <h3 id="question-text">題目內容將在這裡顯示</h3>
+                </div>
+                
+                <div class="options-container">
+                    <div class="option-row">
+                        <button class="option-btn" data-index="0" onclick="selectOption(0)">
+                            <span class="option-label">A</span>
+                            <span class="option-text" id="option-0">選項A</span>
+                        </button>
+                        <button class="option-btn" data-index="1" onclick="selectOption(1)">
+                            <span class="option-label">B</span>
+                            <span class="option-text" id="option-1">選項B</span>
+                        </button>
+                    </div>
+                    <div class="option-row">
+                        <button class="option-btn" data-index="2" onclick="selectOption(2)">
+                            <span class="option-label">C</span>
+                            <span class="option-text" id="option-2">選項C</span>
+                        </button>
+                        <button class="option-btn" data-index="3" onclick="selectOption(3)">
+                            <span class="option-label">D</span>
+                            <span class="option-text" id="option-3">選項D</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="explanation-container" id="explanation-container">
+                    <div class="explanation-header">
+                        <i class="fas fa-lightbulb"></i> 答案解釋
+                    </div>
+                    <div class="explanation-content" id="explanation-content">
+                        選擇答案後將顯示解釋
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exam-controls">
+                <button id="prev-btn" class="btn-secondary" onclick="prevQuestion()">
+                    <i class="fas fa-arrow-left"></i> 上一題
+                </button>
+                <button id="next-btn" class="btn-primary" onclick="nextQuestion()" disabled>
+                    下一題 <i class="fas fa-arrow-right"></i>
+                </button>
+                <button id="submit-btn" class="btn-submit" onclick="submitExam()">
+                    <i class="fas fa-paper-plane"></i> 提交考試
+                </button>
+            </div>
+        </div>
+        
+        <!-- 考試結果界面 -->
+        <div id="result-screen" class="screen">
+            <div class="result-header">
+                <h2><i class="fas fa-chart-bar"></i> 考試結果</h2>
+                <div class="result-summary">
+                    <div class="score-card">
+                        <div class="score-circle">
+                            <span id="score-percentage">0%</span>
+                        </div>
+                        <div class="score-details">
+                            <div class="score-item correct">
+                                <i class="fas fa-check-circle"></i>
+                                <span>正確：<strong id="correct-count">0</strong></span>
+                            </div>
+                            <div class="score-item wrong">
+                                <i class="fas fa-times-circle"></i>
+                                <span>錯誤：<strong id="wrong-count">0</strong></span>
+                            </div>
+                            <div class="score-item total">
+                                <i class="fas fa-file-alt"></i>
+                                <span>總題數：<strong id="total-count">0</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-details">
+                <h3><i class="fas fa-list-check"></i> 詳細分析</h3>
+                <div id="result-list" class="result-list">
+                    <!-- 每題的詳細結果將在這裡動態生成 -->
+                </div>
+            </div>
+            
+            <div class="result-controls">
+                <button class="btn-primary" onclick="restartExam()">
+                    <i class="fas fa-redo"></i> 重新開始
+                </button>
+                <button class="btn-secondary" onclick="showWelcomeScreen()">
+                    <i class="fas fa-home"></i> 返回首頁
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

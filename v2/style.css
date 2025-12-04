@@ -1,0 +1,606 @@
+/* 全局樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    min-height: 700px;
+}
+
+/* 屏幕切換 */
+.screen {
+    display: none;
+    padding: 30px;
+    height: 100%;
+}
+
+.screen.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 歡迎界面樣式 */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.header h1 {
+    color: #4a5568;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.header .subtitle {
+    color: #718096;
+    font-size: 1.1rem;
+}
+
+.config-panel {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.config-item {
+    margin-bottom: 25px;
+}
+
+.config-item label {
+    display: block;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.number-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 200px;
+}
+
+.btn-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-number:hover {
+    background: #667eea;
+    color: white;
+}
+
+#question-count {
+    width: 80px;
+    height: 40px;
+    text-align: center;
+    font-size: 1.2rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.subject-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.subject-tag {
+    background: #e6fffa;
+    color: #234e52;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    border: 1px solid #81e6d9;
+}
+
+.stats-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.stat-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.stat-label {
+    display: block;
+    color: #718096;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #4a5568;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-primary, .btn-secondary, .btn-submit {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    flex: 2;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+    flex: 1;
+}
+
+.btn-secondary:hover {
+    background: #cbd5e0;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.instructions {
+    background: #fff5f5;
+    border-radius: 15px;
+    padding: 25px;
+    border-left: 5px solid #fc8181;
+}
+
+.instructions h3 {
+    color: #c53030;
+    margin-bottom: 15px;
+}
+
+.instructions ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.instructions li {
+    padding: 8px 0;
+    color: #744210;
+    position: relative;
+    padding-left: 25px;
+}
+
+.instructions li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #38a169;
+    font-weight: bold;
+}
+
+/* 考試界面樣式 */
+.exam-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.exam-info h2 {
+    color: #4a5568;
+    font-size: 1.8rem;
+}
+
+.progress-container {
+    margin-top: 10px;
+}
+
+.progress-label {
+    font-size: 1.1rem;
+    color: #718096;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    width: 300px;
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+.timer-container {
+    background: #f8f9fa;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.question-container {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.question-content {
+    margin-bottom: 30px;
+}
+
+.question-content h3 {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: #2d3748;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option-row {
+    display: flex;
+    gap: 15px;
+}
+
+.option-btn {
+    flex: 1;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.option-btn:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.option-btn.selected {
+    background: linear-gradient(135deg, #667eea20, #764ba220);
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.option-label {
+    width: 40px;
+    height: 40px;
+    background: #667eea;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.option-btn.selected .option-label {
+    background: #764ba2;
+}
+
+.option-text {
+    font-size: 1.1rem;
+    flex: 1;
+}
+
+.explanation-container {
+    margin-top: 30px;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    border-left: 4px solid #38a169;
+    display: none;
+}
+
+.explanation-container.show {
+    display: block;
+    animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.explanation-header {
+    color: #38a169;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.explanation-content {
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+.exam-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+/* 結果界面樣式 */
+.result-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.result-header h2 {
+    color: #4a5568;
+    margin-bottom: 30px;
+}
+
+.score-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.score-circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.score-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.score-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+}
+
+.score-item.correct {
+    background: #c6f6d5;
+    color: #22543d;
+}
+
+.score-item.wrong {
+    background: #fed7d7;
+    color: #742a2a;
+}
+
+.score-item.total {
+    background: #bee3f8;
+    color: #2c5282;
+}
+
+.result-details {
+    margin-bottom: 30px;
+}
+
+.result-details h3 {
+    color: #4a5568;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.result-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.result-item {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-left: 4px solid #e2e8f0;
+    transition: all 0.3s;
+}
+
+.result-item.correct {
+    border-left-color: #38a169;
+    background: #f0fff4;
+}
+
+.result-item.wrong {
+    border-left-color: #e53e3e;
+    background: #fff5f5;
+}
+
+.result-question {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2d3748;
+}
+
+.result-answer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.result-explanation {
+    color: #718096;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding-top: 10px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.result-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .container {
+        border-radius: 10px;
+        margin: 10px;
+    }
+    
+    .screen {
+        padding: 20px;
+    }
+    
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .option-row {
+        flex-direction: column;
+    }
+    
+    .progress-bar {
+        width: 200px;
+    }
+    
+    .score-card {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .exam-controls {
+        flex-direction: column;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .timer-container {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+    
+    .question-content h3 {
+        font-size: 1.2rem;
+    }
+    
+    .option-btn {
+        padding: 15px;
+    }
+    
+    .score-circle {
+        width: 150px;
+        height: 150px;
+        font-size: 2rem;
+    }
+}
+
+/* 加載動畫 */
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #718096;
+}
+
+.fa-spin {
+    animation: fa-spin 2s infinite linear;
+}
+
+@keyframes fa-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
