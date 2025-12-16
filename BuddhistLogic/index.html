@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HaauHei</title>
+    <title>考試系統</title>
     <style>
         * {
             margin: 0;
@@ -85,6 +85,8 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
+            width: 100%;
+            max-width: 300px;
         }
 
         .menu-btn::before {
@@ -760,7 +762,7 @@
 <body>
     <div class="container">
         <!-- 選單介面 -->
-        <div id="menuScreen" class="screen active">
+        <div id="menuScreen" class="screen active menu-screen">
             <h1 class="header" id="header-title">載入中...</h1>
             <div class="menu-buttons">
                 <button id="examBtn" class="menu-btn">考試</button>
@@ -1706,22 +1708,22 @@
             startNewExamSession() {
                 // 生成考試題目
                 this.uiManager.examQuestions = this.dataManager.getQuestionsForExam(this.dataManager.questionCount);
-                this.uiManager.userAnswers = new Array(this.uiManager.examQuestions.length).fill(undefined);
+                
+                // 初始化用戶答案數組
+                this.uiManager.userAnswers = new Array(this.uiManager.examQuestions.length);
+                
+                // 重置題目索引
                 this.uiManager.currentQuestionIndex = 0;
                 
-                // 開始計時
-                this.timeManager.startTimer();
-                
-                // 顯示考試介面
-                this.uiManager.showScreen('examScreen');
+                // 顯示第一題
                 this.showCurrentQuestion();
             }
 
             showCurrentQuestion() {
                 const currentQuestion = this.uiManager.examQuestions[this.uiManager.currentQuestionIndex];
                 this.uiManager.renderQuestion(
-                    currentQuestion,
-                    this.uiManager.currentQuestionIndex,
+                    currentQuestion, 
+                    this.uiManager.currentQuestionIndex, 
                     this.uiManager.examQuestions.length
                 );
             }
@@ -1732,20 +1734,17 @@
                     const isCorrect = this.uiManager.userAnswers[index] === question.correctAnswer;
                     this.dataManager.updateHistory(question.id, isCorrect);
                 });
-                
-                // 更新統計顯示
-                this.updateStatsDisplay();
-                
-                // 顯示結果介面
+
+                // 顯示結果
                 this.uiManager.showScreen('resultScreen');
                 this.uiManager.renderResults(this.uiManager.examQuestions, this.uiManager.userAnswers);
             }
 
             renderSettingsScreen() {
-                // 設定考試題數
-                document.getElementById('questionCountSetting').value = this.dataManager.questionCount;
+                // 更新題目數量輸入框
+                document.getElementById('questionCountSetting').value = this.dataManager.getQuestionCount();
                 
-                // 渲染科目選擇
+                // 渲染科目選擇列表
                 const enabledSubjects = this.dataManager.getEnabledSubjects();
                 this.uiManager.renderAvailableSubjects(this.dataManager.subjects, enabledSubjects, 'availableSubjectsSettings');
             }
@@ -1764,3 +1763,6 @@
     </script>
 </body>
 </html>
+
+
+
