@@ -1,0 +1,34 @@
+{
+  "systemConfig": {
+    "localStorageKeyName": "haauhei_BL",
+    "pageTitle": "佛教邏輯",
+    "defaultQuestionCount": 2,
+    "defaultSelectedSubjectIndex": [0],
+    "subjects": [
+      {
+        "displayName": "佛教邏輯 第一部分",
+        "files": [
+          "subjects/1.第一部分.json"
+        ]
+      },
+      {
+        "displayName": "佛教邏輯 第三部分 構造的世界", 
+        "files": [
+          "subjects/3.佛教邏輯 第三部分 構造的世界json"
+        ]
+      },
+      {
+        "displayName": "佛教邏輯 第三部分 第二章 比量", 
+        "files": [
+          "subjects/3.2.佛教邏輯 第三部分 第二章 比量.json",
+        ]
+      },
+      {
+        "displayName": "佛教邏輯 第三部分 第三章 為他比量（三段論式）", 
+        "files": [
+          "subjects/3.3.佛教邏輯 第三部分 第三章 為他比量（三段論式）.json"
+        ]
+      }
+    ]
+  }
+}
