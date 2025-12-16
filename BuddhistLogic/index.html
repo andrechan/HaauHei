@@ -37,7 +37,7 @@
         }
 
         .active {
-            display: flex;
+            display: flex !important;
             flex-direction: column;
         }
 
@@ -55,6 +55,7 @@
             border-radius: 15px;
             background: linear-gradient(45deg, #667eea, #764ba2);
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
         .menu-screen h1 {
@@ -1334,10 +1335,16 @@
             }
 
             showScreen(screenId) {
+                // 隱藏所有屏幕
                 document.querySelectorAll('.screen').forEach(screen => {
                     screen.classList.remove('active');
                 });
-                document.getElementById(screenId).classList.add('active');
+                
+                // 顯示目標屏幕
+                const targetScreen = document.getElementById(screenId);
+                if (targetScreen) {
+                    targetScreen.classList.add('active');
+                }
             }
 
             renderQuestion(question, index, total) {
@@ -1763,6 +1770,3 @@
     </script>
 </body>
 </html>
-
-
-
