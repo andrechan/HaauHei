@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HaauHei</title>
+    <title>考試系統</title>
     <style>
         * {
             margin: 0;
@@ -48,6 +48,7 @@
             font-size: 2em;
             padding: 20px 0;
             border-bottom: 2px solid #3498db;
+            position: relative; /* 新增相對定位 */
         }
 
         .menu-screen h1 {
@@ -328,6 +329,9 @@
             cursor: pointer;
             transition: background-color 0.3s;
             margin-bottom: 20px;
+            position: absolute;
+            right: 0;
+            top: 20px;
         }
 
         .back-btn:hover {
@@ -559,14 +563,6 @@
             color: #1976d2;
         }
 
-        .frequent-reference {
-            margin: 10px 0;
-            padding: 5px;
-            background: #fff3cd;
-            border-radius: 3px;
-            color: #856404;
-        }
-
         .frequent-question-meta {
             display: flex;
             justify-content: space-between;
@@ -609,6 +605,12 @@
             
             .frequent-question-item {
                 padding: 10px;
+            }
+            
+            .back-btn {
+                position: static;
+                margin-bottom: 20px;
+                width: 100%;
             }
         }
     </style>
@@ -1069,7 +1071,6 @@
                             options: question.options,
                             correctAnswer: question.correctAnswer,
                             explanation: question.explanation,
-                            reference: question.reference || '無',
                             count: count,
                             subjectName: question.subjectName
                         };
@@ -1503,6 +1504,7 @@
                     
                     this.dataManager.updateEnabledSubjects(selectedSubjects);
                     
+                    alert('設定已保存！');
                 };
                 
                 // 清空統計按鈕
