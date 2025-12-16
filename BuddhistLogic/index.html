@@ -28,17 +28,26 @@
             flex-direction: column;
         }
 
+        /* 修正：確保所有屏幕默認為不可見 */
         .screen {
-            display: none;
+            display: none !important;
             animation: fadeIn 0.3s ease-in-out;
             flex: 1;
-            display: flex;
             flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            pointer-events: none;
         }
 
-        .active {
+        /* 修正：確保活動屏幕可見 */
+        .screen.active {
             display: flex !important;
-            flex-direction: column;
+            opacity: 1;
+            pointer-events: auto;
         }
 
         @keyframes fadeIn {
