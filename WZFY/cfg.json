@@ -1,0 +1,80 @@
+{
+  "systemConfig": {
+    "localStorageKeyName": "haauhei_wzfy",
+    "pageTitle": "WZFY",
+    "defaultQuestionCount": 6,
+    "defaultSelectedSubjectIndex": [0],
+    "subjects": [
+      {
+        "displayName": "甲一、前導 三自性與空有 唯識一詞之意義 唯識學之源流",
+        "files": [
+          "subjects/1.1.三自性與空有.json","subjects/1.2.唯識一詞之意義.json","subjects/1.3.唯識學之源流.json"
+        ]
+      },
+      {
+        "displayName": "甲二、諸行 乙一、現行 丙一、諸行之共相", 
+        "files": [
+          "subjects/2.1.1.諸行之共相.json"
+        ]
+      },
+      {
+        "displayName": "甲二、諸行 乙一、現行 丙二、八識總論", 
+        "files": [
+          "subjects/2.1.2.1-5.八識總論.json",
+          "subjects/2.1.2.6.八識總論 八識之心所.json",
+          "subjects/2.1.2.7-8.八識總論 心所之結構-心心所之性類.json"
+        ]
+      },
+      {
+        "displayName": "甲二、諸行 乙一、現行 丙三、阿賴耶識論", 
+        "files": [
+          "subjects/2.1.3.阿賴耶識論.json"
+        ]
+      },
+      {
+        "displayName": "甲二、諸行 乙一、現行 丙四、末那識論", 
+        "files": [
+          "subjects/2.1.4.末那識論.json"
+        ]
+      },
+      {
+        "displayName": "甲二、諸行 乙一、現行 丙五、前六識論", 
+        "files": [
+          "subjects/2.1.5.前六識論.json"
+        ]
+      },
+      {
+        "displayName": "甲二、諸行 乙二、種子", 
+        "files": [
+          "subjects/2.2.1-4.種子説建立之過程-種子之種類.json",
+          "subjects/2.2.5-8.種子與現行之因果關係至種子釋難.json"
+        ]
+      },
+      {
+        "displayName":"甲二、諸行 乙三、緣生",
+        "files":[
+            "subjects/2.3.1.甲二諸行 乙三緣生 丙一辨緣.json",
+            "subjects/2.3.2.甲二諸行 乙三緣生 丙二辨生.json"
+        ]
+      },
+      {
+        "displayName":"甲三、真如",
+        "files":[
+            "subjects/3.甲三真如.json"
+        ]
+      },
+      {
+        "displayName":"甲四、解行 乙一、量論",
+        "files":[
+            "subjects/4.1.甲四解行 乙一量論.json"
+        ]
+      },
+      {
+        "displayName":"甲四、解行 乙二、修行方法",
+        "files":[
+            "subjects/4.2.甲四解行 乙二修行方法.json"
+        ]
+      }
+    ]
+  }
+}
