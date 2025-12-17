@@ -82,6 +82,18 @@
         "files": [
           "subjects/4.4.第四部分 否定 第四章 邏輯謬誤.json"
         ]
+      },      
+      {
+        "displayName": "第五部分 外部世界的真實性", 
+        "files": [
+          "subjects/5.第五部分 外部世界的真實性.json"
+        ]
+      },      
+      {
+        "displayName": "結論", 
+        "files": [
+          "subjects/6.結論.json"
+        ]
       }
     ]
   }
