@@ -1,0 +1,16 @@
+{
+  "systemConfig": {
+    "localStorageKeyName": "haauhei_NDGGG",
+    "pageTitle": "NDGGG",
+    "defaultQuestionCount": 5,
+    "defaultSelectedSubjectIndex": [0],
+    "subjects": [
+      {
+        "displayName": "NDGGG_01_Subtitles",
+        "files": [
+          "subjects/NDGGG_01_Subtitles.json"
+        ]
+      }
+    ]
+  }
+}

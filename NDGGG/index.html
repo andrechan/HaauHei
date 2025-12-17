@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaauHei</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'PingFang HK', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2em;
+            padding: 20px 0;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .menu-screen h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .menu-buttons {
+            display: grid;
+            gap: 20px;
+        }
+
+        .menu-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 20px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .menu-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .exam-screen h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .progress-container {
+            background: #ecf0f1;
+            border-radius: 10px;
+            height: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: #3498db;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question-info {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #7f8c8d;
+        }
+
+        .question-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option:hover {
+            background-color: #f8f9fa;
+        }
+
+        .option.selected {
+            background-color: #e3f2fd;
+            border-color: #2196f3;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-nav {
+            background-color: #95a5a6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-nav:hover {
+            background-color: #7f8c8d;
+        }
+
+        .btn-next {
+            background-color: #3498db;
+        }
+
+        .btn-next:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-next:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .result-screen h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .summary-stats {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .stat-item {
+            display: inline-block;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .results-list {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .result-item {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-correct {
+            background-color: #e8f5e9;
+        }
+
+        .result-wrong {
+            background-color: #ffebee;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .result-question {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        .result-options {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .option-line {
+            margin: 5px 0;
+        }
+
+        .user-answer {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .correct-answer {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .wrong-answer {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .result-explanation {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e3f2fd;
+            border-radius: 5px;
+            color: #1976d2;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+
+        .stats-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .clear-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            background-color: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background-color: #7f8c8d;
+        }
+
+        .config-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .config-item {
+            margin-bottom: 20px;
+        }
+
+        .config-item label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .config-item input, .config-item select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-start {
+            background-color: #27ae60;
+        }
+
+        .btn-start:hover {
+            background-color: #219a52;
+        }
+
+        .btn-clear {
+            background-color: #e74c3c;
+        }
+
+        .btn-clear:hover {
+            background-color: #c0392b;
+        }
+
+        .data-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .import-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .file-input-wrapper:hover {
+            background: #2980b9;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .import-status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .import-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .import-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .subject-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .subject-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subject-item:last-child {
+            border-bottom: none;
+        }
+
+        .subject-name {
+            font-weight: bold;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .source-tag {
+            background: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+
+        .imported-tag {
+            background: #9b59b6;
+        }
+
+        .local-tag {
+            background: #27ae60;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            flex-shrink: 0;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .frequent-question-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .frequent-question-item:last-child {
+            border-bottom: none;
+        }
+
+        .frequent-question-text {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .frequent-question-options {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .frequent-option {
+            margin: 5px 0;
+            padding: 5px;
+        }
+
+        .frequent-correct-answer {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .frequent-explanation {
+            margin: 10px 0;
+            padding: 10px;
+            background: #e3f2fd;
+            border-radius: 3px;
+            color: #1976d2;
+        }
+
+        .frequent-reference {
+            margin: 10px 0;
+            padding: 5px;
+            background: #fff3cd;
+            border-radius: 3px;
+            color: #856404;
+        }
+
+        .frequent-question-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .config-section, .question-card, .summary-stats, .results-list, .stats-section, .clear-section, .data-section {
+                padding: 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn-nav, .btn-next {
+                width: 100%;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .subject-item {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .subject-name {
+                flex: 1;
+                margin-right: 10px;
+            }
+            
+            .frequent-question-item {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 選單介面 -->
+        <div id="menuScreen" class="screen active">
+            <h1 class="header" id="header-title">載入中...</h1>
+            <div class="menu-buttons">
+                <button id="examBtn" class="menu-btn">考試</button>
+                <button id="settingsBtn" class="menu-btn">設定</button>
+                <button id="statsBtn" class="menu-btn">統計</button>
+                <button id="dataBtn" class="menu-btn">數據</button>
+            </div>
+        </div>
+
+        <!-- 考試介面 -->
+        <div id="examScreen" class="screen">
+            <h1 class="header" id="exam-header">載入中...</h1>
+            <button id="backToMenuBtn1" class="back-btn">返回主選單</button>
+            <h2>考試進行中</h2>
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <div id="questionInfo" class="question-info"></div>
+            <div id="questionCard" class="question-card">
+                <div id="questionText" class="question-text"></div>
+                <div id="optionsContainer" class="options-container"></div>
+            </div>
+            <div class="navigation-buttons">
+                <button id="prevBtn" class="btn-nav">上一題</button>
+                <button id="nextBtn" class="btn-nav btn-next" disabled>下一題</button>
+            </div>
+        </div>
+
+        <!-- 結果介面 -->
+        <div id="resultScreen" class="screen">
+            <h1 class="header" id="result-header">載入中...</h1>
+            <button id="backToMenuBtn2" class="back-btn">返回主選單</button>
+            <h2>考試結果</h2>
+            <div class="summary-stats">
+                <div class="stat-item">
+                    總題數：<span id="totalQuestions" class="stat-value"></span>
+                </div>
+                <div class="stat-item">
+                    答對：<span id="correctAnswers" class="stat-value"></span>
+                </div>
+                <div class="stat-item">
+                    答錯：<span id="wrongAnswers" class="stat-value"></span>
+                </div>
+                <div class="stat-item">
+                    正確率：<span id="accuracyRateResult" class="stat-value"></span>
+                </div>
+            </div>
+            <div id="resultsList" class="results-list"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="restartBtn" class="btn">重新開始</button>
+            </div>
+        </div>
+
+        <!-- 設定介面 -->
+        <div id="settingsScreen" class="screen">
+            <h1 class="header" id="settings-header">載入中...</h1>
+            <button id="backToMenuBtn3" class="back-btn">返回主選單</button>
+            <h2>考試設定</h2>
+            
+            <div class="config-section">
+                <div class="config-item">
+                    <label for="questionCountSetting">每次考試題數：</label>
+                    <input type="number" id="questionCountSetting" min="1" max="100" value="10">
+                </div>
+                
+                <div class="config-item">
+                    <label>選擇生效科目：</label>
+                    <div id="availableSubjectsSettings" class="subject-list"></div>
+                </div>
+                
+                <button id="saveSettingsBtn" class="btn btn-start">保存設定</button>
+            </div>
+        </div>
+
+        <!-- 統計介面 -->
+        <div id="statsScreen" class="screen">
+            <h1 class="header" id="stats-header">載入中...</h1>
+            <button id="backToMenuBtn4" class="back-btn">返回主選單</button>
+            <h2>學習統計</h2>
+            <div class="stats-section">
+                <h3>整體學習狀況</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalAttempted">0</div>
+                        <div class="stat-label">總答題數</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCorrect">0</div>
+                        <div class="stat-label">答對題數</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalWrong">0</div>
+                        <div class="stat-label">答錯題數</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="accuracyRate">0%</div>
+                        <div class="stat-label">正確率</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-section">
+                <h3>常錯題目</h3>
+                <div id="frequentlyWrongList" class="subject-list">
+                    <div>載入中...</div>
+                </div>
+            </div>
+            
+            <div class="clear-section">
+                <button id="clearStatsBtn" class="btn btn-clear">清空所有記錄</button>
+            </div>
+        </div>
+
+        <!-- 數據介面 -->
+        <div id="dataScreen" class="screen">
+            <h1 class="header" id="data-header">載入中...</h1>
+            <button id="backToMenuBtn5" class="back-btn">返回主選單</button>
+            <h2>數據管理</h2>
+            
+            <div class="data-section">
+                <h3>導入數據</h3>
+                <div class="import-section">
+                    <div class="config-item">
+                        <label>上傳題目文件 (JSON格式):</label>
+                        <div class="file-input-wrapper">
+                            選擇文件
+                            <input type="file" id="fileInput" accept=".json" multiple>
+                        </div>
+                        <button id="importBtn" class="btn" style="margin-top: 10px;">導入題目</button>
+                    </div>
+                    <div id="importStatus" class="import-status"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="loadingScreen" class="screen loading">
+            <p>載入題目資料中...</p>
+        </div>
+    </div>
+
+    <script>
+        // data.js - 數據處理模塊
+        class DataManager {
+            constructor() {
+                this.questions = [];
+                this.subjects = [];
+                this.questionCount = 10;
+                this.importedQuestions = []; // 存儲導入的題目
+                this.importedFileNames = []; // 存儲導入文件名
+                this.enabledSubjects = []; // 存儲啟用的科目
+                this.config = null; // 存儲系統配置
+            }
+
+            async loadConfig() {
+                try {
+                    const response = await fetch('cfg.json');
+                    if (response.ok) {
+                        this.config = await response.json();
+                        document.title = this.config.systemConfig.pageTitle;
+                        
+                        // 更新各個頁面的標題
+                        this.updatePageHeaders(this.config.systemConfig.pageTitle);
+                        
+                        this.questionCount = this.config.systemConfig.defaultQuestionCount;
+                    }
+                } catch (error) {
+                    console.warn('未能加載配置文件，使用默認設置:', error);
+                    // 使用默認配置
+                    this.config = {
+                        systemConfig: {
+                            localStorageKeyName: 'haauhei_exam_system',
+                            pageTitle: '考試系統',
+                            defaultQuestionCount: 10,
+                            defaultSelectedSubjectIndex: [1, 2, 3]
+                        }
+                    };
+                    document.title = this.config.systemConfig.pageTitle;
+                    
+                    // 更新各個頁面的標題
+                    this.updatePageHeaders(this.config.systemConfig.pageTitle);
+                    
+                    this.questionCount = this.config.systemConfig.defaultQuestionCount;
+                }
+            }
+
+            updatePageHeaders(title) {
+                // 更新所有頁面的標題
+                const headerElements = [
+                    document.getElementById('header-title'),
+                    document.getElementById('exam-header'),
+                    document.getElementById('result-header'),
+                    document.getElementById('settings-header'),
+                    document.getElementById('stats-header'),
+                    document.getElementById('data-header')
+                ];
+                
+                headerElements.forEach(element => {
+                    if (element) {
+                        element.textContent = title;
+                    }
+                });
+            }
+
+            async loadAllQuestions() {
+                // 先載入配置
+                await this.loadConfig();
+                
+                this.questions = [];
+                this.subjects = [];
+                
+                // 載入本地JSON文件 - 支持一個科目多個文件
+                if (this.config && this.config.systemConfig.subjects) {
+                    // 使用配置文件中的科目列表
+                    for (const subjectConfig of this.config.systemConfig.subjects) {
+                        // 檢查是否已有相同 displayName 的科目
+                        let existingSubject = this.subjects.find(s => s.name === subjectConfig.displayName);
+                        
+                        if (!existingSubject) {
+                            // 如果不存在，創建新的科目條目
+                            existingSubject = {
+                                name: subjectConfig.displayName,
+                                source: '本地',
+                                fileName: subjectConfig.files.join(', '),
+                                selected: true // 默認選中
+                            };
+                            this.subjects.push(existingSubject);
+                        }
+                        
+                        // 加載該科目包含的所有文件
+                        for (const fileName of subjectConfig.files) {
+                            try {
+                                const response = await fetch(fileName);
+                                if (response.ok) {
+                                    const subjectData = await response.json();
+                                    
+                                    subjectData.questions.forEach((q, qIndex) => {
+                                        this.questions.push({
+                                            ...q,
+                                            id: `${fileName}-${qIndex}`,
+                                            subjectName: subjectConfig.displayName, // 使用配置文件中的displayName
+                                            source: '本地',
+                                            fileName: fileName
+                                        });
+                                    });
+                                }
+                            } catch (error) {
+                                console.warn(`載入科目文件 ${fileName} 時出錯:`, error);
+                            }
+                        }
+                    }
+                } else {
+                    // 如果沒有配置文件或配置文件中沒有科目列表，則按原有方式載入
+                    let index = 1;
+                    while (true) {
+                        try {
+                            const response = await fetch(`subjects/${String(index).padStart(4, '0')}.json`);
+                            if (!response.ok) {
+                                break;
+                            }
+                            
+                            const subjectData = await response.json();
+                            this.subjects.push({
+                                name: subjectData.subjectName, 
+                                source: '本地',
+                                fileName: `subjects/${String(index).padStart(4, '0')}.json`,
+                                selected: true // 默認選中
+                            });
+                            
+                            subjectData.questions.forEach((q, qIndex) => {
+                                this.questions.push({
+                                    ...q,
+                                    id: `${index}-${qIndex}`,
+                                    subjectName: subjectData.subjectName,
+                                    source: '本地',
+                                    fileName: `subjects/${String(index).padStart(4, '0')}.json`
+                                });
+                            });
+                            
+                            index++;
+                        } catch (error) {
+                            // 當讀取JSON文件出錯時，不顯示錯誤信息，繼續嘗試下一個文件
+                            break;
+                        }
+                    }
+                }
+                
+                // 添加導入的題目
+                this.importedQuestions.forEach((subjectData, subjectIndex) => {
+                    // 檢查是否已經存在相同的科目名稱
+                    const exists = this.subjects.some(s => s.name === subjectData.subjectName);
+                    if (!exists) {
+                        this.subjects.push({
+                            name: subjectData.subjectName, 
+                            source: '導入',
+                            fileName: this.importedFileNames[subjectIndex] || '導入文件',
+                            selected: true // 默認選中
+                        });
+                    }
+                    
+                    subjectData.questions.forEach((q, qIndex) => {
+                        this.questions.push({
+                            ...q,
+                            id: `imp-${subjectIndex}-${qIndex}`,
+                            subjectName: subjectData.subjectName,
+                            source: '導入',
+                            fileName: this.importedFileNames[subjectIndex] || '導入文件'
+                        });
+                    });
+                });
+                
+                // 應用科目啟用狀態
+                this.applySubjectSelection();
+                
+                return this.questions.length > 0;
+            }
+
+            applySubjectSelection() {
+                // 如果沒有設置啟用科目，根據配置決定是否全選
+                if (this.enabledSubjects.length === 0) {
+                    if (this.config && this.config.systemConfig.defaultSelectedSubjectIndex.length === 0) {
+                        // 如果配置中指定為全選，則選擇所有科目
+                        this.enabledSubjects = this.subjects.map(s => s.name);
+                    } else if (this.config) {
+                        // 否則根據配置選擇特定科目
+                        this.enabledSubjects = [];
+                        this.config.systemConfig.defaultSelectedSubjectIndex.forEach(index => {
+                            if (index >= 0 && index < this.subjects.length) {
+                                this.enabledSubjects.push(this.subjects[index].name);
+                            }
+                        });
+                    } else {
+                        // 默認情況下選擇所有科目
+                        this.enabledSubjects = this.subjects.map(s => s.name);
+                    }
+                }
+                
+                // 過濾問題，只保留啟用科目的問題
+                this.questions = this.questions.filter(q => 
+                    this.enabledSubjects.includes(q.subjectName)
+                );
+            }
+
+            getQuestionsForExam(count) {
+                if (this.questions.length === 0) {
+                    throw new Error('沒有可用題目');
+                }
+                
+                const availableQuestions = [...this.questions];
+                const examQuestions = [];
+                
+                // 應用歷史記錄過濾邏輯
+                const recentCorrectIds = this.getRecentCorrectIds();
+                
+                // 優先選擇非近期正確的題目
+                const filteredQuestions = availableQuestions.filter(q => !recentCorrectIds.includes(q.id));
+                
+                // 如果過濾後的題目不夠，補充近期正確的題目
+                while (examQuestions.length < count && filteredQuestions.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
+                    examQuestions.push(filteredQuestions.splice(randomIndex, 1)[0]);
+                }
+                
+                // 如果仍然不夠，從剩餘題目中隨機選擇
+                const remainingQuestions = availableQuestions.filter(q => !examQuestions.includes(q));
+                while (examQuestions.length < count && remainingQuestions.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+                    examQuestions.push(remainingQuestions.splice(randomIndex, 1)[0]);
+                }
+                
+                // 隨機打亂順序
+                for (let i = examQuestions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [examQuestions[i], examQuestions[j]] = [examQuestions[j], examQuestions[i]];
+                }
+                
+                return examQuestions.slice(0, count);
+            }
+
+            getRecentCorrectIds() {
+                const keyName = this.config ? this.config.systemConfig.localStorageKeyName : 'haauhei_exam_system';
+                const history = JSON.parse(localStorage.getItem(keyName + '_history') || '[]');
+                const now = Date.now();
+                const tenDays = 10 * 24 * 60 * 60 * 1000; // 10天的毫秒數
+                
+                return history
+                    .filter(record => {
+                        return record.correct && (now - record.timestamp) < tenDays;
+                    })
+                    .map(record => record.questionId);
+            }
+
+            updateHistory(questionId, isCorrect) {
+                const keyName = this.config ? this.config.systemConfig.localStorageKeyName : 'haauhei_exam_system';
+                let history = JSON.parse(localStorage.getItem(keyName + '_history') || '[]');
+                
+                // 更新或添加記錄
+                const existingRecord = history.find(record => record.questionId === questionId);
+                if (existingRecord) {
+                    existingRecord.correct = isCorrect;
+                    existingRecord.timestamp = Date.now();
+                } else {
+                    history.push({
+                        questionId: questionId,
+                        correct: isCorrect,
+                        timestamp: Date.now()
+                    });
+                }
+                
+                // 限制歷史記錄數量
+                if (history.length > 1000) {
+                    history = history.slice(-1000);
+                }
+                
+                localStorage.setItem(keyName + '_history', JSON.stringify(history));
+            }
+            
+            // 獲取統計資訊
+            getStatistics() {
+                const keyName = this.config ? this.config.systemConfig.localStorageKeyName : 'haauhei_exam_system';
+                const history = JSON.parse(localStorage.getItem(keyName + '_history') || '[]');
+                const totalAttempted = history.length;
+                const totalCorrect = history.filter(record => record.correct).length;
+                const totalWrong = totalAttempted - totalCorrect;
+                const accuracyRate = totalAttempted > 0 ? Math.round((totalCorrect / totalAttempted) * 100) : 0;
+                
+                // 獲取常錯題目
+                const wrongQuestions = {};
+                history.forEach(record => {
+                    if (!record.correct) {
+                        if (!wrongQuestions[record.questionId]) {
+                            wrongQuestions[record.questionId] = 0;
+                        }
+                        wrongQuestions[record.questionId]++;
+                    }
+                });
+                
+                // 按錯誤次數排序
+                const sortedWrongQuestions = Object.entries(wrongQuestions)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 10); // 只顯示前10個
+                
+                // 獲取題目詳細信息
+                const detailedWrongQuestions = sortedWrongQuestions
+                    .map(([questionId, count]) => {
+                        const question = this.questions.find(q => q.id === questionId);
+                        if (!question) return null; // 如果找不到題目則跳過
+                        return {
+                            id: questionId,
+                            question: question.question,
+                            options: question.options,
+                            correctAnswer: question.correctAnswer,
+                            explanation: question.explanation,
+                            reference: question.reference || '無',
+                            count: count,
+                            subjectName: question.subjectName
+                        };
+                    })
+                    .filter(item => item !== null); // 過濾掉null項目
+                
+                return {
+                    totalAttempted,
+                    totalCorrect,
+                    totalWrong,
+                    accuracyRate,
+                    frequentlyWrong: detailedWrongQuestions
+                };
+            }
+            
+            // 清空統計記錄
+            clearStatistics() {
+                const keyName = this.config ? this.config.systemConfig.localStorageKeyName : 'haauhei_exam_system';
+                localStorage.removeItem(keyName + '_history');
+            }
+            
+            // 導入題目文件（累加模式）
+            async importQuestions(files) {
+                for (const file of files) {
+                    try {
+                        const content = await file.text();
+                        const jsonData = JSON.parse(content);
+                        
+                        // 驗證JSON格式
+                        if (!jsonData.subjectName || !Array.isArray(jsonData.questions)) {
+                            throw new Error('無效的JSON格式，缺少subjectName或questions字段');
+                        }
+                        
+                        // 添加到現有導入列表
+                        this.importedQuestions.push(jsonData);
+                        this.importedFileNames.push(file.name);
+                    } catch (error) {
+                        throw new Error(`文件 ${file.name} 解析失敗: ${error.message}`);
+                    }
+                }
+                
+                return this.importedQuestions.length;
+            }
+            
+            // 更新啟用科目
+            updateEnabledSubjects(selectedSubjects) {
+                this.enabledSubjects = selectedSubjects;
+                // 保存到本地存儲
+                const keyName = this.config ? this.config.systemConfig.localStorageKeyName : 'haauhei_exam_system';
+                localStorage.setItem(keyName + '_enabledSubjects', JSON.stringify(this.enabledSubjects));
+                // 重新載入題目
+                return this.loadAllQuestions();
+            }
+            
+            // 獲取啟用的科目
+            getEnabledSubjects() {
+                const keyName = this.config ? this.config.systemConfig.localStorageKeyName : 'haauhei_exam_system';
+                // 從本地存儲恢復
+                const saved = localStorage.getItem(keyName + '_enabledSubjects');
+                if (saved) {
+                    this.enabledSubjects = JSON.parse(saved);
+                }
+                return this.enabledSubjects;
+            }
+            
+            // 更新考試題數
+            updateQuestionCount(count) {
+                this.questionCount = count;
+                // 保存到本地存儲
+                const keyName = this.config ? this.config.systemConfig.localStorageKeyName : 'haauhei_exam_system';
+                localStorage.setItem(keyName + '_questionCount', count);
+            }
+            
+            // 獲取考試題數
+            getQuestionCount() {
+                const keyName = this.config ? this.config.systemConfig.localStorageKeyName : 'haauhei_exam_system';
+                // 從本地存儲恢復
+                const saved = localStorage.getItem(keyName + '_questionCount');
+                if (saved) {
+                    this.questionCount = parseInt(saved);
+                }
+                return this.questionCount;
+            }
+        }
+
+        // time.js - 時間管理模塊
+        class TimeManager {
+            constructor() {
+                this.startTime = null;
+                this.examDuration = 0;
+            }
+
+            startTimer() {
+                this.startTime = Date.now();
+            }
+
+            getElapsedTime() {
+                if (!this.startTime) return 0;
+                return Date.now() - this.startTime;
+            }
+
+            formatTime(milliseconds) {
+                const seconds = Math.floor(milliseconds / 1000);
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
+        }
+
+        // ui.js - 用戶界面模塊
+        class UIManager {
+            constructor() {
+                this.currentQuestionIndex = 0;
+                this.userAnswers = [];
+                this.examQuestions = [];
+            }
+
+            showScreen(screenId) {
+                document.querySelectorAll('.screen').forEach(screen => {
+                    screen.classList.remove('active');
+                });
+                document.getElementById(screenId).classList.add('active');
+            }
+
+            renderQuestion(question, index, total) {
+                const questionInfo = document.getElementById('questionInfo');
+                questionInfo.textContent = `第 ${index + 1} 題，共 ${total} 題 (${question.subjectName})`;
+                
+                const questionText = document.getElementById('questionText');
+                questionText.textContent = question.question;
+                
+                const optionsContainer = document.getElementById('optionsContainer');
+                optionsContainer.innerHTML = '';
+                
+                question.options.forEach((option, optIndex) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.textContent = `${String.fromCharCode(65 + optIndex)}. ${option}`;
+                    optionDiv.onclick = () => this.selectOption(optIndex);
+                    
+                    if (this.userAnswers[index] === optIndex) {
+                        optionDiv.classList.add('selected');
+                    }
+                    
+                    optionsContainer.appendChild(optionDiv);
+                });
+                
+                // 更新進度條
+                const progressBar = document.getElementById('progressBar');
+                const progressPercent = ((index + 1) / total) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                
+                // 更新導航按鈕狀態
+                document.getElementById('prevBtn').disabled = index === 0;
+                document.getElementById('nextBtn').disabled = this.userAnswers[index] === undefined;
+            }
+
+            selectOption(optionIndex) {
+                this.userAnswers[this.currentQuestionIndex] = optionIndex;
+                
+                // 更新選項樣式
+                document.querySelectorAll('.option').forEach((opt, idx) => {
+                    if (idx === optionIndex) {
+                        opt.classList.add('selected');
+                    } else {
+                        opt.classList.remove('selected');
+                    }
+                });
+                
+                // 啟用下一題按鈕
+                document.getElementById('nextBtn').disabled = false;
+            }
+
+            renderResults(examQuestions, userAnswers) {
+                const total = examQuestions.length;
+                let correct = 0;
+                
+                const resultsList = document.getElementById('resultsList');
+                resultsList.innerHTML = '';
+                
+                examQuestions.forEach((question, index) => {
+                    const userAnswer = userAnswers[index];
+                    const isCorrect = userAnswer === question.correctAnswer;
+                    
+                    if (isCorrect) correct++;
+                    
+                    const resultItem = document.createElement('div');
+                    resultItem.className = `result-item ${isCorrect ? 'result-correct' : 'result-wrong'}`;
+                    
+                    const header = document.createElement('div');
+                    header.className = 'result-header';
+                    header.innerHTML = `
+                        <span>第 ${index + 1} 題</span>
+                        <span>${isCorrect ? '✅ 正確' : '❌ 錯誤'}</span>
+                    `;
+                    
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'result-question';
+                    questionDiv.innerHTML = `<strong>題目：</strong>${question.question}`;
+                    
+                    // 顯示四個選項
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'result-options';
+                    optionsDiv.innerHTML = '<strong>選項：</strong><br>';
+                    question.options.forEach((option, optIndex) => {
+                        const optionLetter = String.fromCharCode(65 + optIndex);
+                        const optionClass = userAnswer === optIndex ? 'user-answer' : '';
+                        optionsDiv.innerHTML += `<div class="option-line ${optionClass}">${optionLetter}. ${option}</div>`;
+                    });
+                    
+                    // 顯示用戶答案和正確答案
+                    const answerDiv = document.createElement('div');
+                    answerDiv.innerHTML = `
+                        <strong>你的答案：</strong>
+                        <span class="${userAnswer === question.correctAnswer ? 'correct-answer' : 'wrong-answer'}">
+                            ${userAnswer !== undefined ? String.fromCharCode(65 + userAnswer) : '未作答'}
+                        </span>
+                        <br>
+                        <strong>正確答案：</strong>
+                        <span class="correct-answer">${String.fromCharCode(65 + question.correctAnswer)}</span>
+                        <br>
+                        <strong>科目：</strong>${question.subjectName}
+                        <br>
+                        <strong>來源：</strong>${question.fileName}
+                    `;
+                    
+                    const explanationDiv = document.createElement('div');
+                    explanationDiv.className = 'result-explanation';
+                    explanationDiv.innerHTML = `<strong>解釋：</strong>${question.explanation}`;
+                    
+                    resultItem.appendChild(header);
+                    resultItem.appendChild(questionDiv);
+                    resultItem.appendChild(optionsDiv);
+                    resultItem.appendChild(answerDiv);
+                    resultItem.appendChild(explanationDiv);
+                    resultsList.appendChild(resultItem);
+                });
+                
+                // 更新統計數據
+                document.getElementById('totalQuestions').textContent = total;
+                document.getElementById('correctAnswers').textContent = correct;
+                document.getElementById('wrongAnswers').textContent = total - correct;
+                document.getElementById('accuracyRateResult').textContent = `${Math.round((correct / total) * 100)}%`;
+            }
+            
+            updateStatsDisplay(stats) {
+                document.getElementById('totalAttempted').textContent = stats.totalAttempted;
+                document.getElementById('totalCorrect').textContent = stats.totalCorrect;
+                document.getElementById('totalWrong').textContent = stats.totalWrong;
+                document.getElementById('accuracyRate').textContent = `${stats.accuracyRate}%`;
+            }
+            
+            renderFrequentlyWrongList(frequentlyWrong) {
+                const listElement = document.getElementById('frequentlyWrongList');
+                
+                if (frequentlyWrong.length === 0) {
+                    listElement.innerHTML = '<div>暫無常錯題目</div>';
+                    return;
+                }
+                
+                listElement.innerHTML = '';
+                frequentlyWrong.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'frequent-question-item';
+                    
+                    // 生成選項列表
+                    let optionsHtml = '';
+                    item.options.forEach((option, idx) => {
+                        const optionLetter = String.fromCharCode(65 + idx);
+                        const isCorrect = idx === item.correctAnswer;
+                        optionsHtml += `<div class="frequent-option">${optionLetter}. ${option} ${isCorrect ? '<span class="frequent-correct-answer">(正確)</span>' : ''}</div>`;
+                    });
+                    
+                    itemElement.innerHTML = `
+                        <div class="frequent-question-text">${item.question}</div>
+                        <div class="frequent-question-options">
+                            <strong>選項：</strong>
+                            ${optionsHtml}
+                        </div>
+                        <div class="frequent-explanation">
+                            <strong>解釋：</strong>${item.explanation}
+                        </div>
+                        <div class="frequent-question-meta">
+                            <span>科目: ${item.subjectName}</span>
+                            <span>錯誤次數: ${item.count}</span>
+                        </div>
+                    `;
+                    listElement.appendChild(itemElement);
+                });
+            }
+            
+            renderAvailableSubjects(subjects, enabledSubjects, containerId) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+                
+                subjects.forEach(subject => {
+                    const item = document.createElement('div');
+                    item.className = 'subject-item';
+                    
+                    const isChecked = enabledSubjects.includes(subject.name);
+                    item.innerHTML = `
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="subject-${subject.name}" ${isChecked ? 'checked' : ''}>
+                        </div>
+                        <div class="subject-name">${subject.name}</div>
+                        <span class="source-tag ${subject.source === '導入' ? 'imported-tag' : 'local-tag'}">${subject.source}</span>
+                    `;
+                    
+                    container.appendChild(item);
+                });
+            }
+            
+            showImportStatus(message, isSuccess) {
+                const statusDiv = document.getElementById('importStatus');
+                statusDiv.textContent = message;
+                statusDiv.className = `import-status ${isSuccess ? 'import-success' : 'import-error'}`;
+                statusDiv.style.display = 'block';
+                
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // main.js - 主控制模塊
+        class ExamSystem {
+            constructor() {
+                this.dataManager = new DataManager();
+                this.timeManager = new TimeManager();
+                this.uiManager = new UIManager();
+                
+                this.initializeEventListeners();
+                
+                // 在構造函數中自動加載JSON文件
+                this.loadInitialData();
+            }
+
+            async loadInitialData() {
+                // 顯示載入介面
+                this.uiManager.showScreen('loadingScreen');
+                
+                try {
+                    // 載入題目
+                    const hasQuestions = await this.dataManager.loadAllQuestions();
+                    
+                    // 顯示選單介面
+                    this.uiManager.showScreen('menuScreen');
+                    
+                    if (!hasQuestions) {
+                        alert('沒有找到題目檔案！\n\n請確保在 subjects 目錄中有有效的題目JSON文件或已導入題目。');
+                    }
+                } catch (error) {
+                    console.error('初始數據載入失敗:', error);
+                    alert('初始數據載入失敗，請確保通過HTTP服務器訪問此頁面。\n\n錯誤: ' + error.message);
+                    this.uiManager.showScreen('menuScreen');
+                }
+            }
+
+            initializeEventListeners() {
+                // 選單按鈕
+                document.getElementById('examBtn').onclick = () => {
+                    this.uiManager.showScreen('examScreen');
+                    this.startExam();
+                };
+                
+                document.getElementById('settingsBtn').onclick = () => {
+                    this.uiManager.showScreen('settingsScreen');
+                    this.renderSettingsScreen();
+                };
+                
+                document.getElementById('statsBtn').onclick = () => {
+                    this.uiManager.showScreen('statsScreen');
+                    this.updateStatsDisplay();
+                };
+                
+                document.getElementById('dataBtn').onclick = () => {
+                    this.uiManager.showScreen('dataScreen');
+                };
+                
+                // 返回主選單按鈕
+                document.getElementById('backToMenuBtn1').onclick = () => {
+                    this.uiManager.showScreen('menuScreen');
+                };
+                
+                document.getElementById('backToMenuBtn2').onclick = () => {
+                    this.uiManager.showScreen('menuScreen');
+                };
+                
+                document.getElementById('backToMenuBtn3').onclick = () => {
+                    this.uiManager.showScreen('menuScreen');
+                };
+                
+                document.getElementById('backToMenuBtn4').onclick = () => {
+                    this.uiManager.showScreen('menuScreen');
+                };
+                
+                document.getElementById('backToMenuBtn5').onclick = () => {
+                    this.uiManager.showScreen('menuScreen');
+                };
+                
+                // 下一題按鈕
+                document.getElementById('nextBtn').onclick = () => {
+                    if (this.uiManager.currentQuestionIndex < this.uiManager.examQuestions.length - 1) {
+                        this.uiManager.currentQuestionIndex++;
+                        this.showCurrentQuestion();
+                    } else {
+                        this.finishExam();
+                    }
+                };
+                
+                // 上一題按鈕
+                document.getElementById('prevBtn').onclick = () => {
+                    if (this.uiManager.currentQuestionIndex > 0) {
+                        this.uiManager.currentQuestionIndex--;
+                        this.showCurrentQuestion();
+                    }
+                };
+                
+                // 重新開始按鈕
+                document.getElementById('restartBtn').onclick = () => {
+                    this.startExam();
+                };
+                
+                // 保存設定按鈕
+                document.getElementById('saveSettingsBtn').onclick = () => {
+                    const questionCount = parseInt(document.getElementById('questionCountSetting').value) || 10;
+                    this.dataManager.updateQuestionCount(questionCount);
+                    
+                    const selectedSubjects = Array.from(document.querySelectorAll('#availableSubjectsSettings input[type="checkbox"]:checked'))
+                        .map(cb => cb.id.replace('subject-', ''));
+                    
+                    this.dataManager.updateEnabledSubjects(selectedSubjects);
+                    
+                    alert('設定已保存！');
+                };
+                
+                // 清空統計按鈕
+                document.getElementById('clearStatsBtn').onclick = () => {
+                    if (confirm('確定要清空所有學習記錄嗎？此操作不可恢復。')) {
+                        this.dataManager.clearStatistics();
+                        this.updateStatsDisplay();
+                        alert('記錄已清空！');
+                    }
+                };
+                
+                // 導入按鈕
+                document.getElementById('importBtn').onclick = () => {
+                    const fileInput = document.getElementById('fileInput');
+                    if (fileInput.files.length === 0) {
+                        this.uiManager.showImportStatus('請先選擇要導入的JSON文件', false);
+                        return;
+                    }
+                    
+                    this.importFiles(fileInput.files);
+                };
+            }
+
+            async importFiles(files) {
+                try {
+                    const previousCount = this.dataManager.importedQuestions.length;
+                    const count = await this.dataManager.importQuestions(files);
+                    this.uiManager.showImportStatus(`成功導入 ${files.length} 個文件，總共 ${count} 個科目`, true);
+                    
+                    // 重新載入並更新數據
+                    await this.dataManager.loadAllQuestions();
+                } catch (error) {
+                    this.uiManager.showImportStatus(`導入失敗: ${error.message}`, false);
+                }
+            }
+
+            async startExam() {
+                try {
+                    // 獲取考試設定
+                    this.dataManager.questionCount = this.dataManager.getQuestionCount();
+                    this.dataManager.questionCount = Math.min(this.dataManager.questionCount, this.dataManager.questions.length);
+                    
+                    // 開始考試
+                    this.startNewExamSession();
+                } catch (error) {
+                    console.error('考試初始化失敗:', error);
+                    alert('考試初始化失敗，請確保通過HTTP服務器訪問此頁面。\n\n錯誤: ' + error.message);
+                    this.uiManager.showScreen('menuScreen');
+                }
+            }
+
+            startNewExamSession() {
+                // 生成考試題目
+                this.uiManager.examQuestions = this.dataManager.getQuestionsForExam(this.dataManager.questionCount);
+                this.uiManager.userAnswers = new Array(this.uiManager.examQuestions.length).fill(undefined);
+                this.uiManager.currentQuestionIndex = 0;
+                
+                // 開始計時
+                this.timeManager.startTimer();
+                
+                // 顯示考試介面
+                this.uiManager.showScreen('examScreen');
+                this.showCurrentQuestion();
+            }
+
+            showCurrentQuestion() {
+                const currentQuestion = this.uiManager.examQuestions[this.uiManager.currentQuestionIndex];
+                this.uiManager.renderQuestion(
+                    currentQuestion,
+                    this.uiManager.currentQuestionIndex,
+                    this.uiManager.examQuestions.length
+                );
+            }
+
+            finishExam() {
+                // 更新歷史記錄
+                this.uiManager.examQuestions.forEach((question, index) => {
+                    const isCorrect = this.uiManager.userAnswers[index] === question.correctAnswer;
+                    this.dataManager.updateHistory(question.id, isCorrect);
+                });
+                
+                // 更新統計顯示
+                this.updateStatsDisplay();
+                
+                // 顯示結果介面
+                this.uiManager.showScreen('resultScreen');
+                this.uiManager.renderResults(this.uiManager.examQuestions, this.uiManager.userAnswers);
+            }
+
+            renderSettingsScreen() {
+                // 設定考試題數
+                document.getElementById('questionCountSetting').value = this.dataManager.questionCount;
+                
+                // 渲染科目選擇
+                const enabledSubjects = this.dataManager.getEnabledSubjects();
+                this.uiManager.renderAvailableSubjects(this.dataManager.subjects, enabledSubjects, 'availableSubjectsSettings');
+            }
+
+            updateStatsDisplay() {
+                const stats = this.dataManager.getStatistics();
+                this.uiManager.updateStatsDisplay(stats);
+                this.uiManager.renderFrequentlyWrongList(stats.frequentlyWrong);
+            }
+        }
+
+        // 初始化應用
+        window.addEventListener('DOMContentLoaded', () => {
+            new ExamSystem();
+        });
+    </script>
+</body>
+</html>
