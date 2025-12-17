@@ -42,21 +42,45 @@
         ]
       },      
       {
-        "displayName": "第三部分 構造的世界 第二章 比量", 
+        "displayName": "第三部分 構造的世界 第二章 矛盾律", 
         "files": [
-          "subjects/3.2.第三部分 構造的世界 第二章 比量.json"
+          "subjects/3.2.第三部分 構造的世界 第二章 矛盾律.json"
         ]
       },      
       {
-        "displayName": "第三部分 構造的世界 第三章 為他比量", 
+        "displayName": "第三部分 構造的世界 第三章 共相", 
         "files": [
-          "subjects/3.3.第三部分 構造的世界 第三章 為他比量.json"
+          "subjects/3.3.第三部分 構造的世界 第三章 共相.json"
         ]
       },      
       {
-        "displayName": "第三部分 構造的世界 第四章 邏輯謬誤", 
+        "displayName": "第三部分 構造的世界 第四章 辨證法", 
         "files": [
-          "subjects/3.4.第三部分 構造的世界 第四章 邏輯謬誤.json"
+          "subjects/3.4.第三部分 構造的世界 第四章 辨證法.json"
+        ]
+      },      
+      {
+        "displayName": "第四部分 否定 第一章 否定性的判断", 
+        "files": [
+          "subjects/4.1.第四部分 否定 第一章 否定性的判断.json"
+        ]
+      },      
+      {
+        "displayName": "第四部分 否定 第二章 邏輯謬誤", 
+        "files": [
+          "subjects/3.4.第四部分 否定 第二章 邏輯謬誤.json"
+        ]
+      },      
+      {
+        "displayName": "第四部分 否定 第三章 邏輯謬誤", 
+        "files": [
+          "subjects/3.4.第四部分 否定 第三章 邏輯謬誤.json"
+        ]
+      },      
+      {
+        "displayName": "第四部分 否定 第四章 邏輯謬誤", 
+        "files": [
+          "subjects/3.4.第四部分 否定 第四章 邏輯謬誤.json"
         ]
       }
     ]
