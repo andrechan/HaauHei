@@ -74,30 +74,30 @@
             font-size: 2em;
         }
 
-        .menu-buttons {
-            display: grid;
-            gap: 5px; /* 修正：menu-buttons 之 gap為5px */
-            flex: 1;
-            display: grid;
-            place-items: center;
-        }
-
-        .menu-btn {
-            background: linear-gradient(45deg, #4a69bd, #6a89cc); /* 修正：背景顏色淺一點 */
-            color: white;
-            border: none;
-            padding: 18px; /* 修正：稍微減少padding使按鈕緊湊一些 */
-            font-size: 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            max-width: 300px;
-        }
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px; /* 從 5px 改為 4px，更緊密 */
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.menu-btn {
+  background: linear-gradient(45deg, #4a69bd, #6a89cc);
+  color: white;
+  border: none;
+  padding: 14px; /* 從 18px 減少 */
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 300px;
+}
 
         .menu-btn::before {
             content: '';
@@ -1715,6 +1715,7 @@
                     
                     // 開始考試
                     this.startNewExamSession();
+                        this.uiManager.showScreen('examScreen');
                 } catch (error) {
                     console.error('考試初始化失敗:', error);
                     alert('考試初始化失敗，請確保通過HTTP服務器訪問此頁面。\n\n錯誤: ' + error.message);
