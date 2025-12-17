@@ -10,6 +10,12 @@
         "files": [
           "subjects/1.第一部份 實在與知識.json"
         ]
+      }, 
+       {
+        "displayName": "第二部份 第一章 現量",
+        "files": [
+          "subjects/2.1.第二部份 第一章 現量.json"
+        ]
       },
       {
         "displayName": "佛教邏輯 第三部分 構造的世界", 
